@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Whitepress
  * Description:       WhiteLabel WordPress plugin. clean-up a lot of Junk from the page
- * Version:           1.0.0
+ * Version:           1.1
  * Author:            Bastiaan de Hart
  * Author URI:        https://bastiaandehart.com/
  */
@@ -17,6 +17,7 @@ $whitepressDisableEmbedWP             = true;
 $whitepressDisablejQuery              = true;
 $whitepressDisableHeadJunkTags        = true;
 $whitepressDisableBlockLib            = true;
+$whitepressDisableCF7Style            = true;
 
 if ($whitepressDisableEmojiStyle === true) {
     remove_action('wp_head', 'print_emoji_detection_script', 7);
@@ -87,6 +88,14 @@ if ($whitepressDisableBlockLib === true) {
 
     function wps_deregister_styles() {
         wp_dequeue_style( 'wp-block-library' );
+    }
+}
+
+// SOURCE: https://www.isitwp.com/deregister-contact-form-7-css-style-sheet/
+if ($whitepressDisableCF7Style === true) {
+    add_action( 'wp_print_styles', 'wps_deregister_styles', 100 );
+    function wps_deregister_styles() {
+        wp_deregister_style( 'contact-form-7' );
     }
 }
 ?>
